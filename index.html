@@ -1,0 +1,165 @@
+<html>
+<head>
+    <title>VetCalculator</title>
+    <link rel="icon" type="image/png" href="vc.png" />
+    <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        // format a number to xxx.oo, input a number string
+        function numberFormat(a){
+            a = "" + a;
+            if(a.split(".").length == 2) {
+                return a.split(".")[0] + "." + a.split(".")[1].slice(0,2);
+            }else {
+                return a;
+            }
+        }
+
+
+
+        var lowerLimitDrugA = 0;
+        var upperLimitDrugA = 0;
+        var lowerLimitDrugB = 0;
+        var upperLimitDrugB = 0;
+        var lowerLimitDrugC = 0;
+        var upperLimitDrugC = 0;
+        var lowerLimitDrugD = 0;
+        var upperLimitDrugD = 0;
+        var lowerLimitDrugE = 0;
+        var upperLimitDrugE = 0;
+        var lowerLimitDrugF = 0;
+        var upperLimitDrugF = 0;
+        function test(){
+            var wt = parseFloat($("#wt").val());
+            var cnt = parseInt($("#cnt").val());
+            if($("#species")[0].value == "rabbit"){
+              var lowerLimitDrugA = 5;
+              var upperLimitDrugA = 20;
+              var lowerLimitDrugB = 20;
+              var upperLimitDrugB = 40;
+              var lowerLimitDrugC = 0.2;
+              var upperLimitDrugC = 0.5;
+              var lowerLimitDrugD = 15;
+              var upperLimitDrugD = 30;
+              var lowerLimitDrugE = 4;
+              var upperLimitDrugE = 15;
+              var lowerLimitDrugF = 0.2;
+              var upperLimitDrugF = 0.4;
+            }else if($("#species")[0].value == "rodent"){
+              var lowerLimitDrugA = 5;
+              var upperLimitDrugA = 20;
+              var lowerLimitDrugB = 25;
+              var upperLimitDrugB = 50;
+              var lowerLimitDrugC = 0.5;
+              var upperLimitDrugC = 2;
+              var lowerLimitDrugD = 15;
+              var upperLimitDrugD = 30;
+              var lowerLimitDrugE = 4;
+              var upperLimitDrugE = 15;
+              var lowerLimitDrugF = 0.2;
+              var upperLimitDrugF = 0.4;
+            }else if($("#species")[0].value == "reptile"){
+              var lowerLimitDrugA = 5;
+              var upperLimitDrugA = 10;
+              var lowerLimitDrugB = 40;
+              var upperLimitDrugB = 100;
+              var lowerLimitDrugC = 0.1;
+              var upperLimitDrugC = 0.5;
+              var lowerLimitDrugD = 15;
+              var upperLimitDrugD = 30;
+              var lowerLimitDrugE = 4;
+              var upperLimitDrugE = 15;
+              var lowerLimitDrugF = 0;
+              var upperLimitDrugF = 0;
+            }else if($("#species")[0].value == "hedgehog"){
+              var lowerLimitDrugA = 2.5;
+              var upperLimitDrugA = 10;
+              var lowerLimitDrugB = 20;
+              var upperLimitDrugB = 20;
+              var lowerLimitDrugC = 0.08;
+              var upperLimitDrugC = 0.2;
+              var lowerLimitDrugD = 30;
+              var upperLimitDrugD = 30;
+              var lowerLimitDrugE = 4;
+              var upperLimitDrugE = 15;
+              var lowerLimitDrugF = 0.2;
+              var upperLimitDrugF = 0.4;
+            }else if($("#species")[0].value == "sugar glider"){
+              var lowerLimitDrugA = 2.5;
+              var upperLimitDrugA = 5;
+              var lowerLimitDrugB = 25;
+              var upperLimitDrugB = 25;
+              var lowerLimitDrugC = 0.1;
+              var upperLimitDrugC = 0.2;
+              var lowerLimitDrugD = 10;
+              var upperLimitDrugD = 20;
+              var lowerLimitDrugE = 4;
+              var upperLimitDrugE = 15;
+              var lowerLimitDrugF = 0.2;
+              var upperLimitDrugF = 0.2;
+            }
+            var dataSet = [];
+
+            dataSet.push(
+               ["Baytril", numberFormat(lowerLimitDrugA) + "~" + numberFormat(upperLimitDrugA), numberFormat(wt*lowerLimitDrugA/50) + "~" + numberFormat(wt*upperLimitDrugA/50), numberFormat(wt*lowerLimitDrugA/50*cnt) + "~" + numberFormat(wt*upperLimitDrugA/50*cnt)],
+               ["Metronidazole", numberFormat(lowerLimitDrugB) + "~" + numberFormat(upperLimitDrugB), numberFormat(wt*lowerLimitDrugB/250) + "~" + numberFormat(wt*upperLimitDrugB/250), numberFormat(wt*lowerLimitDrugB/250*cnt) + "~" + numberFormat(wt*upperLimitDrugB/250*cnt)],
+               ["Meloxicam", numberFormat(lowerLimitDrugC) + "~" + numberFormat(upperLimitDrugC), numberFormat(wt*lowerLimitDrugC/7.5) + "~" + numberFormat(wt*upperLimitDrugC/7.5), numberFormat(wt*lowerLimitDrugC/7.5*cnt) + "~" + numberFormat(wt*upperLimitDrugC/7.5*cnt)],
+               ["TS", numberFormat(lowerLimitDrugD) + "~" + numberFormat(upperLimitDrugD), numberFormat(wt*lowerLimitDrugD/400) + "~" + numberFormat(wt*upperLimitDrugD/400), numberFormat(wt*lowerLimitDrugD/400*cnt) + "~" + numberFormat(wt*upperLimitDrugD/400*cnt)],
+               ["Silymarin", numberFormat(lowerLimitDrugE) + "~" + numberFormat(upperLimitDrugE), numberFormat(wt*lowerLimitDrugE/100) + "~" + numberFormat(wt*upperLimitDrugE/100), numberFormat(wt*lowerLimitDrugE/100*cnt) + "~" + numberFormat(wt*upperLimitDrugE/100*cnt)],
+               ["Ivermectin", numberFormat(lowerLimitDrugF) + "~" + numberFormat(upperLimitDrugF), numberFormat(wt*lowerLimitDrugF/10) + "~" + numberFormat(wt*upperLimitDrugF/10), numberFormat(wt*lowerLimitDrugF/10*cnt) + "~" + numberFormat(wt*upperLimitDrugF/10*cnt)]
+            );
+
+            $('#table').DataTable( {
+                "destroy": true,
+                "pageLength": 100,
+                "autoWidth":false,
+                data: dataSet,
+                columns: [
+                    { title: "Drug" },
+                    { title: "Dosage" },
+                    { title: "perDrug" },
+                    { title: "tab" }
+                ]
+            } );
+            $("#table").css("width","90%");
+        }
+
+        $(document).ready(function(){
+            //replace anything that is not a number to a decimal point
+            $("#wt").on("keydown", function (e) {
+                if (isNaN(e.key) && e.key != "Backspace") {
+                    console.log(e.key);
+                    e.preventDefault();
+                    $(this).val($(this).val() + ".");
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <h1 class="text-center">Vet Calculator</h1>
+    <div class="text-center">
+        <select id="species" onchange="test();">
+            <option value ="rabbit">Rabbit</option>
+            <option value ="rodent">Rodent</option>
+            <option value ="reptile">reptile</option>
+            <option value ="hedgehog">hedgehog</option>
+            <option value ="sugar glider">sugar glider</option>
+        </select>
+        <br>
+        Weight: <input id="wt" type='tel' onchange="test();"></input> 公斤
+        <br>
+        份數: <input id="cnt" type="number" pattern="\d*" onchange="test();"></input> 份
+        <br>
+        <div width="95%">
+            <table id="table" class="display" width="100%"></table>
+        </div>
+    </div>
+</body>
+</html>
